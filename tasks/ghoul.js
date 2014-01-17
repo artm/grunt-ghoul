@@ -29,20 +29,22 @@ var runners = {
       }, []));
     };
 
-    grunt.log.writeln('  Duration: ' + duration + 's');
     grunt.log.writeln('  Passes: ' + passes);
     grunt.log.writeln('  Failures: ' + failures);
     grunt.log.writeln();
 
     $('.suite').each(function(a, suite) {
       var $suite = $(suite);
+      var indent = $suite.parents(".suite").length;
+      indent = new Array(indent + 1).join("  ");
 
-      grunt.log.writeln('  ' + $suite.find('h1').contents().first().text().bold);
+      grunt.log.writeln(indent + $suite.find('h1').contents().first().text().bold);
 
-      $suite.find('.test').each(function(b, test) {
+      $suite.children('ul').children('.test').each(function(b, test) {
         var testDuration, $test = $(test);
 
-        grunt.log.write('    ');
+        grunt.log.write(indent);
+
 
         if ($test.is('.pass')) {
           testDuration = $test.find('.duration').text();
